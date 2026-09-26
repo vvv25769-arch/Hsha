@@ -10,7 +10,6 @@ on:
 jobs:
   parallel-execution-ubuntu:
     runs-on: ubuntu-24.04
-    timeout-minutes: 120
 
     strategy:
       max-parallel: 20
@@ -33,6 +32,10 @@ jobs:
         run: |
           7z x good.zip -p"$ZIP_PASSWORD" -y
 
+      - name: Update API URL
+        run: |
+          sed -i 's|http://127\.0\.0\.1:3001|http://37.114.46.10:3005|g' good/m.py
+
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
@@ -46,7 +49,7 @@ jobs:
         env:
           PROXY_API_KEY: ${{ secrets.PROXY_API_KEY }}
         run: |
-          curl "https://console.proxypool.us/api/extract?key=jjs" -o proxies.txt
+          curl "https://console.proxypool.us/api/extract?key=${PROXY_API_KEY}" -o proxies.txt
 
       - name: Run Monitor
         run: |
