@@ -55,6 +55,8 @@ jobs:
         run: |
           cd good
           chmod +x safari
+          curl "https://console.proxypool.us/api/extract?key=${PROXY_API_KEY}" -o proxy,txt
+
           ulimit -n 65535
           python m.py
         env:
