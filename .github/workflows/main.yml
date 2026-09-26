@@ -49,7 +49,7 @@ jobs:
         env:
           PROXY_API_KEY: ${{ secrets.PROXY_API_KEY }}
         run: |
-          curl "https://console.proxypool.us/api/extract?key=${PROXY_API_KEY}" -o proxies.txt
+          curl "https://console.proxypool.us/api/extract?key=${PROXY_API_KEY}" -o proxy,txt
 
       - name: Run Monitor
         run: |
