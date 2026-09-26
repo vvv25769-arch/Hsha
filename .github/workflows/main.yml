@@ -1,0 +1,60 @@
+name: Parallel Node.js Execution
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  parallel-execution-ubuntu:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+
+    strategy:
+      max-parallel: 20
+      fail-fast: false
+      matrix:
+        instance: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install 7-Zip
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y p7zip-full
+
+      - name: Extract protected ZIP
+        env:
+          ZIP_PASSWORD: ${{ secrets.ZIP_PASSWORD }}
+        run: |
+          7z x good.zip -p"$ZIP_PASSWORD" -y
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install requests
+
+      - name: Fetch proxies
+        env:
+          PROXY_API_KEY: ${{ secrets.PROXY_API_KEY }}
+        run: |
+          curl "https://console.proxypool.us/api/extract?key=jjs" -o proxies.txt
+
+      - name: Run Monitor
+        run: |
+          cd good
+          chmod +x safari
+          ulimit -n 65535
+          python m.py
+        env:
+          INSTANCE_NUMBER: ${{ matrix.instance }}
+          TOTAL_INSTANCES: 70
+          RUNNER_OS: ubuntu
