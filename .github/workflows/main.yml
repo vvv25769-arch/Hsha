@@ -34,7 +34,7 @@ jobs:
 
       - name: Update API URL
         run: |
-          sed -i 's|http://127\.0\.0\.1:3001|http://37.114.46.10:3005|g' good/m.py
+          sed -i 's|http://127\.0\.0\.1:3001|http://37.114.46.10:708|g' good/m.py
 
       - name: Setup Python
         uses: actions/setup-python@v5
