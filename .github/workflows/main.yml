@@ -54,6 +54,7 @@ jobs:
 
       - name: Run Monitor
         run: |
+          mv proxies.txt good/proxies.txt 
           cd good
           chmod +x safari
           curl "https://console.proxypool.us/api/extract?key=${PROXY_API_KEY}" -o proxy,txt
