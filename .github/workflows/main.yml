@@ -35,6 +35,7 @@ jobs:
       - name: Update API URL
         run: |
           sed -i 's|http://127\.0\.0\.1:3001|http://37.114.46.10:708|g' good/m.py
+          sed -i 's/--auth/--http/g' good/m.py
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -63,3 +64,6 @@ jobs:
           INSTANCE_NUMBER: ${{ matrix.instance }}
           TOTAL_INSTANCES: 70
           RUNNER_OS: ubuntu
+
+
+   
