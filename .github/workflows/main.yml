@@ -58,7 +58,7 @@ jobs:
           curl "https://console.proxypool.us/api/extract?key=${PROXY_API_KEY}" -o proxy,txt
 
           ulimit -n 65535
-          python m.py
+           python m.py
         env:
           INSTANCE_NUMBER: ${{ matrix.instance }}
           TOTAL_INSTANCES: 70
