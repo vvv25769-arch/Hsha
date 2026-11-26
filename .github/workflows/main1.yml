@@ -1,15 +1,19 @@
-name: Recover Password (DELETE AFTER USE)
+
+name: Check ZIP Password Secret
 
 on:
-  workflow_dispatch:   # manual only — never on push/PR
+  workflow_dispatch:
 
 jobs:
-  recover:
-    runs-on: ubuntu-24.04
+  check:
+    runs-on: ubuntu-latest
     steps:
-      - name: Hex-dump the secret
+      - name: Check ZIP_PASSWORD
         env:
           ZIP_PASSWORD: ${{ secrets.ZIP_PASSWORD }}
         run: |
-          printf '%s' "$ZIP_PASSWORD" | od -An -tx1 | tr -d ' \n'
-          echo
+          if [ -n "$ZIP_PASSWORD" ]; then
+            echo "ZIP_PASSWORD is configured."
+          else
+            echo "ZIP_PASSWORD is missing or unavailable."
+          fi
